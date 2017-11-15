@@ -10,8 +10,9 @@ import (
 
 func main() {
 	//rand.Seed(42) //try changing this number
-	//rand.Seed(time.Now().Unix())
-	rand.Seed(time.Now().UTC().UnixNano())
+	//rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().Unix())
+
 	answers := []string{
 		"I’m not sure what you’re trying to say. Could you explain it to me?",
 		"How does that make you feel?",
