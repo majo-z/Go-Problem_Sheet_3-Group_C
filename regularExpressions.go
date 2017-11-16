@@ -35,9 +35,8 @@ func ElizaResponse(input string) string { //input string, output string
 	//Capture "I am"
 	//re := regexp.MustCompile(`(?i)I am (.*)`)
 	//MustCompile is like Compile but panics if the expression cannot be parsed...fail fast so you find your mistake early
-	//re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`) //remove full stop and question marks, replace with ?
-	re := regexp.MustCompile(`(?i)\bI['’]?\s*a?m\b ([^.?!]*)[.?!]?`) //improved on capturing all variations, ie. "i am", "I AM", "I’m", "Im", "i’m"
-	//(?i)\bI['’]?\s*a?m\b
+	re := regexp.MustCompile(`I am ([^.?!]*)[.?!]?`)                  //remove full stop and question marks, replace with ?, ` means don't deal with backslashes
+	re2 := regexp.MustCompile(`\b(?i)I['’]?\s*a?m\b ([^.?!]*)[.?!]?`) //improved on capturing all variations, ie. "i am", "I AM", "I'm", "I’m", "Im", "i’m"
 
 	//if matched, _ := regexp.MatchString(`(?i)I am (.*)`, input); matched { //Anything after I am + space
 	//func (re *Regexp) ReplaceAllStringFunc(src string, repl func(string) string) string
@@ -45,6 +44,11 @@ func ElizaResponse(input string) string { //input string, output string
 	if matched := re.MatchString(input); matched {
 		//return "How do you know you are _?"
 		return re.ReplaceAllString(input, "How do you know you are $1?") //$1 refers to a first match
+	}
+
+	if matched := re2.MatchString(input); matched {
+		//return "How do you know you are _?"
+		return re2.ReplaceAllString(input, "I am $1 too.") //$1 refers to a first match
 	}
 
 	answers := []string{
@@ -84,6 +88,10 @@ func main() {
 	fmt.Println()
 
 	fmt.Println("==================================================")
+	fmt.Println("I am looking forward to the weekend.")
+	fmt.Println(ElizaResponse("I am looking forward to the weekend."))
+	fmt.Println()
+
 	fmt.Println("I’m looking forward to the weekend.")
 	fmt.Println(ElizaResponse("I’m looking forward to the weekend."))
 	fmt.Println()
