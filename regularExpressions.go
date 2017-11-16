@@ -9,7 +9,8 @@
 //https://golang.org/pkg/regexp/#example_Regexp_ReplaceAllString
 //https://golang.org/pkg/regexp/
 //https://www.regular-expressions.info/named.html
-
+//https://regex101.com/r/vH0iN5/2
+//https://stackoverflow.com/questions/30957615/regex-to-match-variations-of-i-am-im-im-iam-i-am
 package main
 
 import (
@@ -32,10 +33,11 @@ func ElizaResponse(input string) string { //input string, output string
 	}
 
 	//Capture "I am"
-
 	//re := regexp.MustCompile(`(?i)I am (.*)`)
 	//MustCompile is like Compile but panics if the expression cannot be parsed...fail fast so you find your mistake early
-	re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`) //remove full stop and question marks, replace with ?
+	//re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`) //remove full stop and question marks, replace with ?
+	re := regexp.MustCompile(`(?i)\bI['’]?\s*a?m\b ([^.?!]*)[.?!]?`) //improved on capturing all variations, ie. "i am", "I AM", "I’m", "Im", "i’m"
+	//(?i)\bI['’]?\s*a?m\b
 
 	//if matched, _ := regexp.MatchString(`(?i)I am (.*)`, input); matched { //Anything after I am + space
 	//func (re *Regexp) ReplaceAllStringFunc(src string, repl func(string) string) string
@@ -77,17 +79,34 @@ func main() {
 	fmt.Println(ElizaResponse("I was my father’s favourite."))
 	fmt.Println()
 
-	fmt.Println("I’m looking forward to the weekend.")
-	fmt.Println(ElizaResponse("I’m looking forward to the weekend."))
-	fmt.Println()
-
 	fmt.Println("My grandfather was French!")
 	fmt.Println(ElizaResponse("My grandfather was French!"))
 	fmt.Println()
 
-	fmt.Println("I am happy.")
-	fmt.Println(ElizaResponse("I am happy."))
+	fmt.Println("==================================================")
+	fmt.Println("I’m looking forward to the weekend.")
+	fmt.Println(ElizaResponse("I’m looking forward to the weekend."))
 	fmt.Println()
+
+	fmt.Println("I AM happy.")
+	fmt.Println(ElizaResponse("I AM happy."))
+	fmt.Println()
+
+	fmt.Println("I’m happy.")
+	fmt.Println(ElizaResponse("I’m happy."))
+	fmt.Println()
+
+	fmt.Println("I'm happy.")
+	fmt.Println(ElizaResponse("I'm happy."))
+	fmt.Println()
+
+	fmt.Println("Im happy.")
+	fmt.Println(ElizaResponse("Im happy."))
+	fmt.Println()
+
+	fmt.Println("i’m happy.")
+	fmt.Println(ElizaResponse("i’m happy."))
+	fmt.Println("====================================================")
 
 	fmt.Println("I am not happy with your responses.")
 	fmt.Println(ElizaResponse("I am not happy with your responses."))
