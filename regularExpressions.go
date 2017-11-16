@@ -29,8 +29,8 @@ func ElizaResponse(input string) string { //input string, output string
 
 	//Capture "I am"
 
-	//re := regexp.MustCompile(`(?i)I am (.*)`)
-	re := regexp.MustCompile(`(?i)I am (.*)`) //fail fast so you find your mistake early
+	//re := regexp.MustCompile(`(?i)I am (.*)`)//fail fast so you find your mistake early
+	re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`) //remove full stop and question marks
 
 	//if matched, _ := regexp.MatchString(`(?i)I am (.*)`, input); matched { //Anything after I am + space
 	if matched := re.MatchString(input); matched {
