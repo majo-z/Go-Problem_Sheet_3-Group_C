@@ -8,6 +8,7 @@
 //https://stackoverflow.com/questions/16702924/how-to-explain-1-2-in-javascript-when-using-regular-expression
 //https://golang.org/pkg/regexp/#example_Regexp_ReplaceAllString
 //https://golang.org/pkg/regexp/
+//https://www.regular-expressions.info/named.html
 
 package main
 
@@ -26,6 +27,7 @@ func ElizaResponse(input string) string { //input string, output string
 	//if matched, _ := regexp.MatchString(".*[Ff]ather.*", input); matched { //[]inside square brackets = anything...logical or
 	//if matched, _ := regexp.MatchString(`(?i).*father.*`, input); matched { //(?i) starts case-insensitive mode, (?-i) turns off case-insensitive mode
 	if matched, _ := regexp.MatchString(`(?i).*\bfather\b.*`, input); matched { //\b matches at a position that is called a "word boundary"...ex. only searching for "father", not grandfather
+		//...\b .* (space between \b and .*)will not mach father's either
 		return "Why don’t you tell me more about your father?"
 	}
 
@@ -33,7 +35,7 @@ func ElizaResponse(input string) string { //input string, output string
 
 	//re := regexp.MustCompile(`(?i)I am (.*)`)
 	//MustCompile is like Compile but panics if the expression cannot be parsed...fail fast so you find your mistake early
-	re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`) //remove full stop and question marks
+	re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`) //remove full stop and question marks, replace with ?
 
 	//if matched, _ := regexp.MatchString(`(?i)I am (.*)`, input); matched { //Anything after I am + space
 	//func (re *Regexp) ReplaceAllStringFunc(src string, repl func(string) string) string
