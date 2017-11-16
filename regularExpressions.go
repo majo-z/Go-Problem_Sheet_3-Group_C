@@ -6,6 +6,8 @@
 //https://stackoverflow.com/questions/15145659/what-do-i-and-i-in-regex-mean
 //https://www.regular-expressions.info/wordboundaries.html
 //https://stackoverflow.com/questions/16702924/how-to-explain-1-2-in-javascript-when-using-regular-expression
+//https://golang.org/pkg/regexp/#example_Regexp_ReplaceAllString
+//https://golang.org/pkg/regexp/
 
 package main
 
@@ -29,10 +31,13 @@ func ElizaResponse(input string) string { //input string, output string
 
 	//Capture "I am"
 
-	//re := regexp.MustCompile(`(?i)I am (.*)`)//fail fast so you find your mistake early
+	//re := regexp.MustCompile(`(?i)I am (.*)`)
+	//MustCompile is like Compile but panics if the expression cannot be parsed...fail fast so you find your mistake early
 	re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`) //remove full stop and question marks
 
 	//if matched, _ := regexp.MatchString(`(?i)I am (.*)`, input); matched { //Anything after I am + space
+	//func (re *Regexp) ReplaceAllStringFunc(src string, repl func(string) string) string
+	//ReplaceAllStringFunc returns a copy of src in which all matches of the Regexp have been replaced by the return value of function repl applied to the matched substring
 	if matched := re.MatchString(input); matched {
 		//return "How do you know you are _?"
 		return re.ReplaceAllString(input, "How do you know you are $1?") //$1 refers to a first match
